@@ -17,8 +17,6 @@ public class RtspStream implements Closeable {
 	}
 	
 	public void write(RtspMessage msg) throws IOException {
-		System.out.println("--------------->");
-		System.out.println(msg.toWireString());
 		out.write(msg.toWire());
 		out.flush();
 	}
@@ -77,9 +75,6 @@ public class RtspStream implements Closeable {
 					
 					msg.setPayload(new String(payload, "IBM437"));
 				}
-				
-				System.out.println("<---------------");
-				System.out.println(msg.toWireString());
 				return msg;
 			}
 		}
