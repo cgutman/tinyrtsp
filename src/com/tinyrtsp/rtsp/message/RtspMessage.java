@@ -81,7 +81,7 @@ public abstract class RtspMessage {
 	public byte[] toWire() {
 		String wireStr = toWireString();
 		try {
-			return wireStr.getBytes("ISO-8859-1");
+			return wireStr.getBytes("IBM437");
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
