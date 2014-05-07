@@ -73,7 +73,12 @@ public class RtspStream implements Closeable {
 						offset += in.read(payload, offset, len - offset);
 					} while (offset < len);
 					
-					msg.setPayload(new String(payload, "IBM437"));
+					char[] payloadStr = new char[len];
+					for (int i = 0; i < len; i++) {
+						payloadStr[i] = (char)payload[i];
+					}
+					
+					msg.setPayload(new String(payloadStr));
 				}
 				return msg;
 			}

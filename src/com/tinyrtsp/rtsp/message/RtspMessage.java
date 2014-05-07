@@ -1,6 +1,5 @@
 package com.tinyrtsp.rtsp.message;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,10 +79,12 @@ public abstract class RtspMessage {
 	
 	public byte[] toWire() {
 		String wireStr = toWireString();
-		try {
-			return wireStr.getBytes("IBM437");
-		} catch (UnsupportedEncodingException e) {
-			return null;
+		byte[] wireBytes = new byte[wireStr.length()];
+		
+		for (int i = 0; i < wireBytes.length; i++) {
+			wireBytes[i] = (byte)wireStr.charAt(i);
 		}
+		
+		return wireBytes;
 	}
 }
