@@ -28,9 +28,9 @@ public class RtspRequest extends RtspMessage {
 	public String getTarget() {
 		return target;
 	}
-
+	
 	@Override
-	public String toWireString() {
+	public String toWireStringNoPayload() {
 		StringBuilder toWire = new StringBuilder();
 		
 		// Header
@@ -44,12 +44,14 @@ public class RtspRequest extends RtspMessage {
 		// Options
 		writeOptions(toWire);
 		
-		// End of packet (except payload)
+		// End of packet
 		toWire.append("\r\n");
 		
-		// Payload
-		toWire.append(getPayload());
-		
 		return toWire.toString();
+	}
+
+	@Override
+	public String toWireString() {
+		return toWireStringNoPayload() + getPayload();
 	}
 }

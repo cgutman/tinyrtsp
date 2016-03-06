@@ -75,16 +75,32 @@ public abstract class RtspMessage {
 		}
 	}
 	
+	public abstract String toWireStringNoPayload();
 	public abstract String toWireString();
 	
-	public byte[] toWire() {
-		String wireStr = toWireString();
-		byte[] wireBytes = new byte[wireStr.length()];
+	private byte[] stringToWireBytes(String string) {
+		byte[] wireBytes = new byte[string.length()];
 		
 		for (int i = 0; i < wireBytes.length; i++) {
-			wireBytes[i] = (byte)wireStr.charAt(i);
+			wireBytes[i] = (byte)string.charAt(i);
 		}
 		
 		return wireBytes;
+	}
+	
+	public byte[] toWire() {
+		return stringToWireBytes(toWireString());
+	}
+	
+	public byte[] toWireNoPayload() {
+		return stringToWireBytes(toWireStringNoPayload());
+	}
+	
+	public byte[] toWirePayloadOnly() {
+		String payload = getPayload();
+		if (payload.isEmpty()) {
+			return null;
+		}
+		return stringToWireBytes(payload);
 	}
 }
